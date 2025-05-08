@@ -1,7 +1,17 @@
 import { Gamepad2 } from "lucide-react";
+import { useState } from "react";
 import { Board } from "./components/Board";
+import { BoardState } from "./types";
 
 function App() {
+  const [board, setBoard] = useState<BoardState>(Array(9).fill(null));
+
+  const currentPlayer = board.filter(Boolean).length % 2 === 0 ? "X" : "O";
+
+  const handleClick = (index: number) => {
+    setBoard(board.map((square, i) => (index === i ? currentPlayer : square)));
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-blue-200">
       <div className="w-full max-w-lg rounded-2xl bg-blue-100 p-8">
@@ -12,10 +22,12 @@ function App() {
         </div>
 
         <div className="mb-6 text-center">
-          <p className="text-xl font-semibold text-gray-100">Player X's turn</p>
+          <p className="text-xl font-semibold text-gray-100">
+            Player {currentPlayer}'s turn
+          </p>
         </div>
 
-        <Board />
+        <Board board={board} onClick={handleClick} />
       </div>
     </main>
   );

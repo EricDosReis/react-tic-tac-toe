@@ -1,19 +1,17 @@
+import type { BoardState } from "../types";
 import { Square } from "./Square";
 
-function Board() {
+type BoardProps = {
+  board: BoardState;
+  onClick: (index: number) => void;
+};
+
+function Board({ board, onClick }: BoardProps) {
   return (
     <div className="mx-auto grid max-w-[26rem] grid-cols-3 gap-4">
-      <Square />
-      <Square />
-      <Square />
-
-      <Square />
-      <Square />
-      <Square />
-
-      <Square />
-      <Square />
-      <Square />
+      {board.map((square, index) => (
+        <Square key={index} value={square} onClick={() => onClick(index)} />
+      ))}
     </div>
   );
 }
