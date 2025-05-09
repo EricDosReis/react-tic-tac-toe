@@ -1,8 +1,10 @@
 import { Gamepad2 } from "lucide-react";
 import { useState } from "react";
+
 import { Board } from "./components/Board";
 import { BoardState } from "./types";
 import { checkWinner } from "./utils/check-winner";
+import { isBoardFull } from "./utils/is-board-full";
 
 function App() {
   const [board, setBoard] = useState<BoardState>(Array(9).fill(null));
@@ -12,11 +14,19 @@ function App() {
   const handleClick = (index: number) => {
     if (board[index] || winner) return null;
 
-    setBoard(board.map((square, i) => (index === i ? currentPlayer : square)));
+    setBoard(
+      board.map((square, boardIndex) =>
+        index === boardIndex ? currentPlayer : square,
+      ),
+    );
   };
 
   const getGameStatus = () => {
     if (winner) return `Player ${winner} wins!`;
+
+    if (isBoardFull(board)) {
+      return "It's a draw!";
+    }
 
     return `Player ${currentPlayer}'s turn`;
   };
