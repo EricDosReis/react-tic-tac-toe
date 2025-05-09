@@ -2,6 +2,7 @@ import { Gamepad2 } from "lucide-react";
 import { useState } from "react";
 import { Board } from "./components/Board";
 import { BoardState } from "./types";
+import { checkWinner } from "./utils/check-winner";
 
 function App() {
   const [board, setBoard] = useState<BoardState>(Array(9).fill(null));
@@ -9,8 +10,18 @@ function App() {
   const currentPlayer = board.filter(Boolean).length % 2 === 0 ? "X" : "O";
 
   const handleClick = (index: number) => {
+    if (board[index] || winner) return null;
+
     setBoard(board.map((square, i) => (index === i ? currentPlayer : square)));
   };
+
+  const getGameStatus = () => {
+    if (winner) return `Player ${winner} wins!`;
+
+    return `Player ${currentPlayer}'s turn`;
+  };
+
+  const winner = checkWinner(board);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-blue-200">
@@ -23,7 +34,7 @@ function App() {
 
         <div className="mb-6 text-center">
           <p className="text-xl font-semibold text-gray-100">
-            Player {currentPlayer}'s turn
+            {getGameStatus()}
           </p>
         </div>
 
