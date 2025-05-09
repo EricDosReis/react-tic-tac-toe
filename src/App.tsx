@@ -48,7 +48,7 @@ function App() {
           </p>
         </div>
 
-        <Board board={board} onClick={handleClick} />
+        <Board board={board} winner={winner} onClick={handleClick} />
       </div>
     </main>
   );
