@@ -38,7 +38,7 @@ function App() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-blue-200">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-blue-200 p-8">
       <div className="w-full max-w-lg rounded-2xl bg-blue-100 p-8">
         <div className="mb-8 flex items-center justify-center gap-3">
           <Gamepad2 className="text-pink h-8 w-8" />
